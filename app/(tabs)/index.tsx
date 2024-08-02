@@ -1,70 +1,59 @@
-import { Image, StyleSheet, Platform } from 'react-native';
-
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { Image, View, Text, Pressable, ScrollView } from "react-native";
+import { MusicCard, FavoriteMusicCard } from "@/components/MusicCard";
+import { recentlyPlayedSongs, mightLikeSongs } from "@/utils/data";
 
 export default function HomeScreen() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
+    <ScrollView className="flex flex-col">
+      <View className="relative h-[60vh]">
         <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
+          className="w-screen h-[100%]"
+          source={require("@/assets/images/podcastImg.png")}
         />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+        <View className="absolute flex flex-row bottom-10 left-5 w-full space-x-4">
+          <Image
+            className="w-[150px] h-[150px]"
+            source={require("@/assets/images/podcastImg.png")}
+          />
+          <View>
+            <Text className="text-white text-[30px] font-extrabold">
+              Podcast Name
+            </Text>
+            <Text className="text-white text-[15px]">By Artiste name</Text>
+            <View className="bg-white rounded-full mt-2 w-[100px] h-[40px] flex justify-center items-center">
+              <Pressable>
+                <Text>Featured</Text>
+              </Pressable>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View className="mt-5 mx-2">
+        <Text className="text-white text-[22px]">Recently played</Text>
+        <ScrollView horizontal={true} className="mt-4">
+          {recentlyPlayedSongs.map((item, index) => (
+            <MusicCard
+              key={index}
+              title={item.title}
+              image={item.image}
+              favorite={item.favorite}
+            />
+          ))}
+        </ScrollView>
+      </View>
+      <View className="mt-10 mx-2">
+        <Text className="text-white text-[22px]">You might like</Text>
+        <ScrollView horizontal={true} className="mt-4 mb-10">
+          {mightLikeSongs.map((item, index) => (
+            <MusicCard
+              key={index}
+              title={item.title}
+              image={item.image}
+              favorite={item.favorite}
+            />
+          ))}
+        </ScrollView>
+      </View>
+    </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
