@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { Image, View, Text, Pressable } from "react-native";
+import { Image, View, Text, Pressable, FlatList } from "react-native";
 import { useNavigation } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import { EpisodeCard, FavoriteMusicCard } from "@/components/MusicCard";
+import { recentlyPlayedSongs } from "@/utils/data";
 
 const SongPreview = () => {
   const navigation = useNavigation();
@@ -70,6 +72,17 @@ const SongPreview = () => {
           </Text>
         </Pressable>
       </View>
+      <FlatList
+        data={recentlyPlayedSongs}
+        renderItem={({ item }) => (
+          <FavoriteMusicCard
+            title={item.title}
+            image={item.image}
+            favorite={item.favorite}
+          />
+        )}
+        keyExtractor={(item) => item.title}
+      />
     </View>
   );
 };
