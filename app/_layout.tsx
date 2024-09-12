@@ -33,8 +33,12 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={DarkTheme}>
       <Stack>
+        <Stack.Screen
+          name="(tabs)/song-preview"
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen name="(tabs)/(home)" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="preview" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
     </ThemeProvider>
